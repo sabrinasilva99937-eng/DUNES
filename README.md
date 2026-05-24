@@ -1,8 +1,8 @@
 
 
-# 💎 Dunes — Data Warehouse para Joalheria
+#  Dunes — Data Warehouse para Joalheria
 
-## ✨ Sobre o Projeto
+##  Sobre o Projeto
 
 O  Dunes é um projeto de engenharia de dados desenvolvido para uma joalheria digital, com foco em análise de vendas, clientes, produtos, logística, marketing e marketplace.
 
@@ -10,15 +10,15 @@ O projeto foi construído utilizando SQL no BigQuery, aplicando técnicas de lim
 
 ---
 
-## 📊 Principais Funcionalidades
+##  Principais Funcionalidades
 
-### 🧹 Limpeza de Dados
+###  Limpeza de Dados
 - Padronização de textos
 - Conversão de tipos
 - Tratamento de valores nulos
 - Normalização de informações
 
-### 📦 Views Operacionais
+###  Views Operacionais
 - Clientes
 - Pedidos
 - Produtos
@@ -28,7 +28,7 @@ O projeto foi construído utilizando SQL no BigQuery, aplicando técnicas de lim
 - Parceiros
 - Marketing
 
-### 📈 KPIs Estratégicos
+###  KPIs Estratégicos
 - Ticket médio
 - ROI e ROAS
 - Margem operacional
@@ -38,7 +38,7 @@ O projeto foi construído utilizando SQL no BigQuery, aplicando técnicas de lim
 
 ---
 
-## 🧠 Modelagem de Dados
+##  Modelagem de Dados
 
 ### Tabela Fato
 - vw_fato_vendas
@@ -53,7 +53,7 @@ O projeto foi construído utilizando SQL no BigQuery, aplicando técnicas de lim
 
 ---
 
-## ⚙️ Tecnologias Utilizadas
+##  Tecnologias Utilizadas
 
 - SQL
 - Google BigQuery
@@ -63,7 +63,7 @@ O projeto foi construído utilizando SQL no BigQuery, aplicando técnicas de lim
 
 ---
 
-## 📌 Objetivos do Projeto
+##  Objetivos do Projeto
 
 - Demonstrar conhecimentos em SQL avançado
 - Simular um ambiente real de negócio
@@ -73,7 +73,7 @@ O projeto foi construído utilizando SQL no BigQuery, aplicando técnicas de lim
 
 ---
 
-## 🚀 Futuras Melhorias
+##  Futuras Melhorias
 
 - Dashboard em Power BI
 - Pipeline ETL automatizado
@@ -83,7 +83,7 @@ O projeto foi construído utilizando SQL no BigQuery, aplicando técnicas de lim
 
 ---
 
-## 👨‍💻 Autores
+##  Autores
 Murilo Costa
 Rafael 
 sabrina 
@@ -93,7 +93,7 @@ victor hugo
 
 ---
 
-## ⭐ Diferenciais
+##  Diferenciais
 
 ✔ Estrutura profissional  
 ✔ Modelagem analítica  
