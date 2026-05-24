@@ -1,18 +1,102 @@
 
 
-# Run and deploy your AI Studio app
+# 💎 Dunes — Data Warehouse para Joalheria
 
-This contains everything you need to run your app locally.
+## ✨ Sobre o Projeto
 
-View your app in AI Studio: https://ai.studio/apps/a2d89b35-ecbb-4cfc-ac74-c7a141a1ddb1
+O  Dunes é um projeto de engenharia de dados desenvolvido para uma joalheria digital, com foco em análise de vendas, clientes, produtos, logística, marketing e marketplace.
 
-## Run Locally
+O projeto foi construído utilizando SQL no BigQuery, aplicando técnicas de limpeza, transformação e modelagem analítica de dados.
 
-**Prerequisites:**  Node.js
+---
+
+## 📊 Principais Funcionalidades
+
+### 🧹 Limpeza de Dados
+- Padronização de textos
+- Conversão de tipos
+- Tratamento de valores nulos
+- Normalização de informações
+
+### 📦 Views Operacionais
+- Clientes
+- Pedidos
+- Produtos
+- Pagamentos
+- Entregas
+- Devoluções
+- Parceiros
+- Marketing
+
+### 📈 KPIs Estratégicos
+- Ticket médio
+- ROI e ROAS
+- Margem operacional
+- Performance de produtos
+- SLA logístico
+- Performance marketplace
+
+---
+
+## 🧠 Modelagem de Dados
+
+### Tabela Fato
+- vw_fato_vendas
+
+### Dimensões
+- Clientes
+- Produtos
+- Parceiros
+- Pagamentos
+- Entregas
+- Marketing
+
+---
+
+## ⚙️ Tecnologias Utilizadas
+
+- SQL
+- Google BigQuery
+- Power BI
+- Git
+- GitHub
+
+---
+
+## 📌 Objetivos do Projeto
+
+- Demonstrar conhecimentos em SQL avançado
+- Simular um ambiente real de negócio
+- Construir KPIs estratégicos
+- Criar uma base analítica escalável
+- Desenvolver um portfólio profissional
+
+---
+
+## 🚀 Futuras Melhorias
+
+- Dashboard em Power BI
+- Pipeline ETL automatizado
+- Integração com APIs
+- Machine Learning
+- Deploy em Cloud
+
+---
+
+## 👨‍💻 Autores
+Murilo Costa
+Rafael 
+sabrina 
+ana luiza
+victor hugo
 
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+---
+
+## ⭐ Diferenciais
+
+✔ Estrutura profissional  
+✔ Modelagem analítica  
+✔ KPIs reais de negócio  
+✔ Projeto escalável  
+✔ Organização para portfólio  
