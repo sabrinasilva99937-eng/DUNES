@@ -1,0 +1,297 @@
+Código limpeza dos dados:
+-- SELECT DA TABELA:
+----------------------------------------------------------------------------------------------------
+SELECT *
+FROM `bd_dunes.tb_clientes`;
+-- LIMPESA DOS DADOS:
+----------------------------------------------------------------------------------------------------
+SELECT
+-- IDs
+TRIM(id_cliente) AS id_cliente,
+-- Nome
+INITCAP(TRIM(primeiro_nome)) AS primeiro_nome,
+INITCAP(TRIM(sobrenome)) AS sobrenome,
+-- Contato
+LOWER(TRIM(email)) AS email,
+TRIM(telefone) AS telefone,
+-- Documento
+TRIM(cpf) AS cpf,
+-- Datas
+CAST(data_nascimento AS DATE) AS data_nascimento,
+CAST(data_cadastro AS DATE) AS data_cadastro,
+-- Localização
+INITCAP(TRIM(cidade)) AS cidade,
+UPPER(TRIM(estado)) AS estado,
+CAST(latitude AS FLOAT64) AS latitude,
+CAST(longitude AS FLOAT64) AS longitude,
+-- Marketing
+INITCAP(TRIM(canal_aquisicao)) AS canal_aquisicao,
+-- Métricas
+
+CAST(total_pedidos AS INT64) AS total_pedidos,
+CAST(valor_total_gasto AS NUMERIC) AS valor_total_gasto
+FROM `bd_dunes.tb_clientes`;
+-- SELECT DA TABELA:
+----------------------------------------------------------------------------------------------------
+SELECT *
+FROM `bd_dunes.tb_pedidos`;
+
+-- LIMPESA DOS DADOS:
+----------------------------------------------------------------------------------------------------
+SELECT
+-- IDs
+TRIM(id_pedido) AS id_pedido,
+TRIM(id_cliente) AS id_cliente,
+TRIM(id_parceiro) AS id_parceiro,
+-- Datas
+CAST(data_pedido AS DATE) AS data_pedido,
+CAST(data_entrega AS DATE) AS data_entrega,
+-- Status
+UPPER(TRIM(status_pedido)) AS status_pedido,
+UPPER(TRIM(status_entrega)) AS status_entrega,
+-- Pagamento
+UPPER(TRIM(metodo_pagamento)) AS metodo_pagamento,
+-- Valores
+CAST(valor_subtotal AS NUMERIC) AS valor_subtotal,
+CAST(valor_frete AS NUMERIC) AS valor_frete,
+CAST(valor_desconto AS NUMERIC) AS valor_desconto,
+CAST(valor_total AS NUMERIC) AS valor_total,
+CAST(valor_comissao_parceiro AS NUMERIC) AS valor_comissao_parceiro,
+-- Logística
+TRIM(codigo_rastreio) AS codigo_rastreio
+FROM `bd_dunes.tb_pedidos`;
+
+-- SELECT DA TABELA:
+----------------------------------------------------------------------------------------------------
+SELECT *
+FROM `bd_dunes.tb_produto`;
+-- LIMPESA DOS DADOS:
+----------------------------------------------------------------------------------------------------
+SELECT
+-- IDs
+TRIM(id_produto) AS id_produto,
+TRIM(sku) AS sku,
+TRIM(id_parceiro_fornecedor) AS id_parceiro_fornecedor,
+-- Produto
+INITCAP(TRIM(nome_produto)) AS nome_produto,
+INITCAP(TRIM(categoria)) AS categoria,
+INITCAP(TRIM(subcategoria)) AS subcategoria,
+INITCAP(TRIM(colecao)) AS colecao,
+-- Características
+INITCAP(TRIM(material)) AS material,
+INITCAP(TRIM(pedra_preciosa)) AS pedra_preciosa,
+INITCAP(TRIM(cor)) AS cor,
+-- Medidas
+CAST(quilates_pedra AS FLOAT64) AS quilates_pedra,
+CAST(peso_gramas AS FLOAT64) AS peso_gramas,
+CAST(tamanho_aro AS INT64) AS tamanho_aro,
+-- Valores
+CAST(preco_custo AS NUMERIC) AS preco_custo,
+CAST(preco_venda AS NUMERIC) AS preco_venda,
+-- Estoque
+CAST(quantidade_estoque AS INT64) AS quantidade_estoque,
+CAST(estoque_minimo AS INT64) AS estoque_minimo,
+-- Localização
+INITCAP(TRIM(localizacao_estoque)) AS localizacao_estoque,
+
+-- Certificação/Garantia
+UPPER(TRIM(possui_certificado)) AS possui_certificado,
+CAST(garantia_mes AS INT64) AS garantia_mes,
+-- Status
+UPPER(TRIM(status_produto)) AS status_produto,
+-- Datas
+CAST(data_cadastro AS DATE) AS data_cadastro
+FROM `bd_dunes.tb_produto`;
+-- SELECT DA TABELA:
+----------------------------------------------------------------------------------------------------
+SELECT *
+FROM `bd_dunes.tb_itens_pedido`;
+-- LIMPESA DOS DADOS:
+----------------------------------------------------------------------------------------------------
+SELECT
+-- IDs
+TRIM(id_item_pedido) AS id_item_pedido,
+TRIM(id_pedido) AS id_pedido,
+TRIM(id_produto) AS id_produto,
+-- Quantidade
+CAST(quantidade AS INT64) AS quantidade,
+-- Valores
+CAST(preco_unitario AS NUMERIC) AS preco_unitario,
+CAST(preco_total AS NUMERIC) AS preco_total
+FROM `bd_dunes.tb_itens_pedido`;
+-- SELECT DA TABELA:
+----------------------------------------------------------------------------------------------------
+SELECT *
+FROM `bd_dunes.tb_pagamentos`;
+
+-- LIMPESA DOS DADOS:
+----------------------------------------------------------------------------------------------------
+SELECT
+-- IDs
+TRIM(id_pagamento) AS id_pagamento,
+TRIM(id_pedido) AS id_pedido,
+TRIM(id_transacao) AS id_transacao,
+-- Pagamento
+UPPER(TRIM(metodo_pagamento)) AS metodo_pagamento,
+UPPER(TRIM(status_pagamento)) AS status_pagamento,
+-- Valores
+CAST(valor_pagamento AS NUMERIC) AS valor_pagamento,
+-- Datas
+CAST(data_pagamento AS DATE) AS data_pagamento
+FROM `bd_dunes.tb_pagamentos`;
+-- SELECT DA TABELA:
+----------------------------------------------------------------------------------------------------
+SELECT *
+FROM `bd_dunes.tb_entregas`;
+-- LIMPESA DOS DADOS:
+----------------------------------------------------------------------------------------------------
+SELECT
+-- IDs
+TRIM(id_entrega) AS id_entrega,
+TRIM(id_pedido) AS id_pedido,
+-- Transporte
+INITCAP(TRIM(tranportadora)) AS tranportadora,
+UPPER(TRIM(tipo_frete)) AS tipo_frete,
+-- Valores
+CAST(custo_frete AS NUMERIC) AS custo_frete,
+
+-- Rastreio
+TRIM(codigo_rastreio) AS codigo_rastreio,
+-- Datas
+CAST(data_envio AS DATE) AS data_envio,
+CAST(data_entrega AS DATE) AS data_entrega,
+-- Status
+UPPER(TRIM(status_entrega)) AS status_entrega
+FROM `bd_dunes.tb_entregas`;
+-- SELECT DA TABELA:
+----------------------------------------------------------------------------------------------------
+SELECT *
+FROM `bd_dunes.tb_devolucoes`;
+-- LIMPESA DOS DADOS:
+----------------------------------------------------------------------------------------------------
+SELECT
+-- IDs
+TRIM(id_devolucao) AS id_devolucao,
+TRIM(id_pedido) AS id_pedido,
+TRIM(id_produto) AS id_produto,
+-- Devolução
+INITCAP(TRIM(motivo_devolucao)) AS motivo_devolucao,
+UPPER(TRIM(status_devolucao)) AS status_devolucao,
+-- Datas
+CAST(data_solicitacao AS DATE) AS data_solicitacao,
+CAST(data_conclusao AS DATE) AS data_conclusao
+FROM `bd_dunes.tb_devolucoes`;
+-- SELECT DA TABELA:
+----------------------------------------------------------------------------------------------------
+SELECT *
+FROM `bd_dunes.tb_certificados_produtos`;
+
+-- LIMPESA DOS DADOS:
+----------------------------------------------------------------------------------------------------
+SELECT
+-- IDs
+TRIM(id_certificado) AS id_certificado,
+TRIM(id_produto) AS id_produto,
+-- Certificação
+TRIM(numero_certificado) AS numero_certificado,
+-- Datas
+CAST(data_emissao AS DATE) AS data_emissao,
+CAST(data_expiracao AS DATE) AS data_expiracao
+FROM `bd_dunes.tb_certificados_produtos`;
+-- SELECT DA TABELA:
+----------------------------------------------------------------------------------------------------
+SELECT *
+FROM `bd_dunes.tb_parceiro`;
+-- LIMPESA DOS DADOS:
+----------------------------------------------------------------------------------------------------
+SELECT
+-- IDs
+TRIM(id_parceiro) AS id_parceiro,
+-- Empresa
+INITCAP(TRIM(razao_social)) AS razao_social,
+INITCAP(TRIM(nome_fantasia)) AS nome_fantasia,
+-- Documento
+TRIM(cnpj) AS cnpj,
+-- Contato
+INITCAP(TRIM(nome_contato)) AS nome_contato,
+LOWER(TRIM(email)) AS email,
+TRIM(telefone) AS telefone,
+
+-- Localização
+INITCAP(TRIM(cidade)) AS cidade,
+UPPER(TRIM(estado)) AS estado,
+CAST(latitude AS FLOAT64) AS latitude,
+CAST(longitude AS FLOAT64) AS longitude,
+-- Comissão
+CAST(percentual_comissao AS NUMERIC) AS percentual_comissao,
+-- Parceria
+UPPER(TRIM(status_parceria)) AS status_parceria,
+UPPER(TRIM(contrato_assinado)) AS contrato_assinado,
+-- Datas
+CAST(data_inicio AS DATE) AS data_inicio,
+-- Redes sociais
+LOWER(TRIM(instagram)) AS instagram
+FROM `bd_dunes.tb_parceiro`;
+-- SELECT DA TABELA:
+----------------------------------------------------------------------------------------------------
+SELECT *
+FROM `bd_dunes.tb_campanhas_marketing`;
+-- LIMPESA DOS DADOS:
+----------------------------------------------------------------------------------------------------
+SELECT
+-- IDs
+TRIM(id_campanha) AS id_campanha,
+-- Campanha
+INITCAP(TRIM(nome_campanha)) AS nome_campanha,
+INITCAP(TRIM(plataforma)) AS plataforma,
+-- Métricas
+CAST(valor_orcamento AS NUMERIC) AS valor_orcamento,
+CAST(impressoes AS INT64) AS impressoes,
+CAST(cliques AS INT64) AS cliques,
+
+CAST(conversoes AS INT64) AS conversoes,
+CAST(receita_gerada AS NUMERIC) AS receita_gerada,
+-- Datas
+CAST(data_inicio AS DATE) AS data_inicio,
+CAST(data_fim AS DATE) AS data_fim
+FROM `bd_dunes.tb_campanhas_marketing`;
+-- SELECT DA TABELA:
+----------------------------------------------------------------------------------------------------
+SELECT *
+FROM `bd_dunes.tb_certificados_produtos`;
+-- LIMPESA DOS DADOS:
+----------------------------------------------------------------------------------------------------
+SELECT
+-- IDs
+TRIM(id_certificado) AS id_certificado,
+TRIM(id_produto) AS id_produto,
+-- Certificado
+UPPER(TRIM(numero_certificado)) AS numero_certificado,
+-- Datas
+CAST(data_emissao AS DATE) AS data_emissao,
+CAST(data_expiracao AS DATE) AS data_expiracao
+FROM `bd_dunes.tb_certificados_produtos`;
+-- LIL EXTRA: -----------------------------------------------------------------------------------------------------------
+-- SELECT DA TABELA:
+----------------------------------------------------------------------------------------------------
+SELECT *
+FROM `bd_dunes.tb_certificados_produtos`;
+-- LIMPESA DOS DADOS:
+----------------------------------------------------------------------------------------------------
+SELECT
+
+-- IDs
+TRIM(id_certificado) AS id_certificado,
+TRIM(id_produto) AS id_produto,
+-- Certificado
+UPPER(TRIM(numero_certificado)) AS numero_certificado,
+-- Datas
+CAST(data_emissao AS DATE) AS data_emissao,
+CAST(data_expiracao AS DATE) AS data_expiracao,
+-- Métrica útil
+DATE_DIFF(
+CAST(data_expiracao AS DATE),
+CAST(data_emissao AS DATE),
+DAY
+) AS validade_dias
+FROM `bd_dunes.tb_certificados_produtos`;
