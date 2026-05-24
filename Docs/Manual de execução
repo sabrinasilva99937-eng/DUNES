@@ -1,81 +1,11 @@
-# 💎 Dunes Jewelry App
-Aplicativo mobile desenvolvido para o segmento de e-commerce de luxo e alta relojoaria.
+# Manual de Execução
 
-O projeto foi criado com foco em experiência premium do usuário, design moderno e navegação intuitiva, oferecendo uma interface elegante para visualização e gerenciamento de produtos de luxo.
+## Instalação de dependências
+pip install -r requirements.txt
 
----
+## Executar projeto
+python src/main.py
 
-# 📱 Funcionalidades
-
-## 🔐 Sistema de Autenticação
-- Login com e-mail ou nome de usuário
-- Campo de senha protegido
-- Recuperação de senha
-- Login com Google (OAuth 2.0)
-- Cadastro de novos usuários
-
----
-
-## 🛍️ Vitrine de Produtos
-- Layout em grid responsivo
-- Cards modernos de produtos
-- Imagens em alta qualidade
-- Exibição de categorias
-- Preços formatados em BRL
-- Sistema de favoritos (wishlist)
-
----
-
-## 👤 Área do Usuário
-- Gerenciamento de perfil
-- Histórico de pedidos
-- Gerenciamento de endereços
-- Métodos de pagamento
-- Área de favoritos
-- Configurações da conta
-
----
-
-## 🧭 Navegação
-- Bottom Navigation Bar
-- Navegação entre:
-  - Home
-  - Catálogo
-  - Favoritos
-  - Carrinho
-  - Perfil
-
----
-
-# 🎨 Design e UX
-- Interface minimalista
-- Estilo premium/luxury
-- Componentes modernos
-- Navegação intuitiva
-- Experiência otimizada para mobile
-
----
-
-# ⚙️ Estrutura Técnica
-- Arquitetura modular
-- Componentização de interface
-- Estrutura escalável
-- Preparado para integração backend
-
----
-
-# 🚀 Tecnologias Utilizadas
-- Flutter / React Native *(edite aqui para a tecnologia que você usou)*
-- Firebase *(se usou)*
-- Google OAuth
-- UI/UX Mobile Design
-
----
-
-# 📌 Status do Projeto
-✅ Em desenvolvimento
-
----
-
-# 👨‍💻 Desenvolvido por
-Miguel (Guel)
+## Saídas esperadas
+- outputs/rota_otimizada.png → imagem fictícia da rota
+- outputs/resumo_rota.txt → resumo da rota e tempo total
