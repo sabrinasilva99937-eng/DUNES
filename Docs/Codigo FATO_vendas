@@ -1,0 +1,106 @@
+-- vw_fato_vendas -- TABELA FATO  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE VIEW `bd_dunes.vw_fato_vendas` AS
+
+SELECT
+
+-- Pedido
+p.id_pedido,
+p.data_pedido,
+p.status_pedido,
+p.metodo_pagamento,
+
+-- Cliente
+c.id_cliente,
+c.nome_completo,
+c.idade,
+c.cidade AS cidade_cliente,
+c.estado AS estado_cliente,
+c.canal_aquisicao,
+
+-- Produto
+pr.id_produto,
+pr.nome_produto,
+pr.categoria,
+pr.subcategoria,
+pr.colecao,
+pr.material,
+pr.pedra_preciosa,
+pr.preco_custo,
+pr.preco_venda,
+pr.lucro_bruto,
+pr.margem_percentual,
+pr.status_estoque,
+pr.quantidade_estoque,
+
+-- Item pedido
+ip.quantidade,
+ip.preco_unitario,
+ip.preco_total,
+
+-- Pedido valores
+p.valor_subtotal,
+p.valor_frete,
+p.valor_desconto,
+p.valor_total,
+
+-- Pagamento
+pg.status_pagamento,
+pg.valor_pagamento,
+pg.faixa_valor_pagamento,
+
+-- Parceiro
+pa.id_parceiro,
+pa.nome_fantasia,
+pa.razao_social,
+
+pa.cidade,
+pa.estado,
+pa.latitude,
+pa.longitude,
+
+pa.percentual_comissao,
+pa.faixa_comissao,
+
+pa.status_parceria,
+pa.classificacao_parceria,
+
+pa.dias_parceria,
+
+-- Comissão marketplace
+p.valor_comissao_parceiro,
+
+-- Logística
+p.status_entrega,
+p.dias_entrega,
+
+-- Indicadores
+ROUND(
+(ip.preco_total - (pr.preco_custo * ip.quantidade)),
+2
+) AS lucro_item,
+
+ROUND(
+SAFE_DIVIDE(
+(ip.preco_total - (pr.preco_custo * ip.quantidade)),
+NULLIF(ip.preco_total,0)
+) * 100,
+2
+) AS margem_item_percentual
+
+FROM `bd_dunes.vw_pedidos` p
+
+LEFT JOIN `bd_dunes.vw_clientes` c
+ON p.id_cliente = c.id_cliente
+
+LEFT JOIN `bd_dunes.vw_itens_pedido` ip
+ON p.id_pedido = ip.id_pedido
+
+LEFT JOIN `bd_dunes.vw_produtos` pr
+ON ip.id_produto = pr.id_produto
+
+LEFT JOIN `bd_dunes.vw_pagamentos` pg
+ON p.id_pedido = pg.id_pedido
+
+LEFT JOIN `bd_dunes.vw_parceiros` pa
+ON p.id_parceiro = pa.id_parceiro;
