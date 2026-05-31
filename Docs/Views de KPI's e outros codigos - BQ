@@ -1,0 +1,536 @@
+-- Outras Views ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE VIEW `bd_dunes.vw_kpi_clientes` AS
+
+SELECT
+
+-- Cliente
+id_cliente,
+nome_completo,
+idade,
+cidade_cliente,
+estado_cliente,
+canal_aquisicao,
+
+-- Métricas
+COUNT(DISTINCT id_pedido) AS total_pedidos,
+
+ROUND(
+SUM(valor_total),
+2
+) AS faturamento_cliente,
+
+ROUND(
+AVG(valor_total),
+2
+) AS ticket_medio_cliente,
+
+ROUND(
+MAX(valor_total),
+2
+) AS maior_compra,
+
+ROUND(
+MIN(valor_total),
+2
+) AS menor_compra,
+
+-- Produtos
+SUM(quantidade) AS total_itens_comprados,
+
+COUNT(DISTINCT id_produto) AS produtos_diferentes,
+
+-- Datas
+MIN(data_pedido) AS primeira_compra,
+MAX(data_pedido) AS ultima_compra,
+
+DATE_DIFF(
+CURRENT_DATE(),
+MAX(data_pedido),
+DAY
+) AS dias_ultima_compra,
+
+-- Segmentação cliente
+CASE
+
+WHEN SUM(valor_total) >= 50000 THEN 'CLIENTE_VIP'
+
+WHEN SUM(valor_total) >= 20000 THEN 'CLIENTE_PREMIUM'
+
+WHEN SUM(valor_total) >= 5000 THEN 'CLIENTE_FREQUENTE'
+
+ELSE 'CLIENTE_COMUM'
+
+END AS categoria_cliente
+
+FROM `bd_dunes.vw_fato_vendas`
+
+GROUP BY
+id_cliente,
+nome_completo,
+idade,
+cidade_cliente,
+estado_cliente,
+canal_aquisicao;
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE VIEW `bd_dunes.vw_kpi_produtos` AS
+
+SELECT
+
+-- Produto
+id_produto,
+nome_produto,
+categoria,
+subcategoria,
+colecao,
+material,
+pedra_preciosa,
+
+-- Estoque
+status_estoque,
+quantidade_estoque,
+
+-- Valores
+preco_custo,
+preco_venda,
+lucro_bruto,
+margem_percentual,
+
+-- Vendas
+COUNT(DISTINCT id_pedido) AS total_pedidos,
+
+SUM(quantidade) AS total_itens_vendidos,
+
+ROUND(
+SUM(preco_total),
+2
+) AS faturamento_produto,
+
+ROUND(
+SUM(
+preco_total - (preco_custo * quantidade)
+),
+2
+) AS lucro_total_produto,
+
+ROUND(
+AVG(preco_total),
+2
+) AS ticket_medio_produto,
+
+-- Datas
+MIN(data_pedido) AS primeira_venda,
+MAX(data_pedido) AS ultima_venda,
+
+DATE_DIFF(
+CURRENT_DATE(),
+MAX(data_pedido),
+DAY
+) AS dias_ultima_venda,
+
+-- Performance produto
+CASE
+
+WHEN SUM(preco_total) >= 100000 THEN 'BEST_SELLER'
+
+WHEN SUM(preco_total) >= 50000 THEN 'ALTA_PERFORMANCE'
+
+WHEN SUM(preco_total) >= 10000 THEN 'MEDIA_PERFORMANCE'
+
+ELSE 'BAIXA_PERFORMANCE'
+
+END AS classificacao_produto
+
+FROM `bd_dunes.vw_fato_vendas`
+
+GROUP BY
+
+id_produto,
+nome_produto,
+categoria,
+subcategoria,
+colecao,
+material,
+pedra_preciosa,
+status_estoque,
+quantidade_estoque,
+preco_custo,
+preco_venda,
+lucro_bruto,
+margem_percentual;
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE VIEW `bd_dunes.vw_kpi_financeiro` AS
+
+SELECT
+
+-- Data
+data_pedido,
+
+EXTRACT(YEAR FROM data_pedido) AS ano,
+EXTRACT(MONTH FROM data_pedido) AS mes,
+EXTRACT(WEEK FROM data_pedido) AS semana,
+
+-- Pedidos
+COUNT(DISTINCT id_pedido) AS total_pedidos,
+
+-- Clientes
+COUNT(DISTINCT id_cliente) AS clientes_unicos,
+
+-- Produtos
+COUNT(DISTINCT id_produto) AS produtos_vendidos,
+
+SUM(quantidade) AS total_itens_vendidos,
+
+-- Receita
+ROUND(
+SUM(valor_total),
+2
+) AS faturamento_total,
+
+ROUND(
+AVG(valor_total),
+2
+) AS ticket_medio,
+
+ROUND(
+MAX(valor_total),
+2
+) AS maior_venda,
+
+ROUND(
+MIN(valor_total),
+2
+) AS menor_venda,
+
+-- Custos
+ROUND(
+SUM(preco_custo * quantidade),
+2
+) AS custo_total_produtos,
+
+ROUND(
+SUM(valor_frete),
+2
+) AS custo_total_frete,
+
+ROUND(
+SUM(valor_comissao_parceiro),
+2
+) AS total_comissao_parceiros,
+
+-- Lucro
+ROUND(
+SUM(
+valor_total -
+(preco_custo * quantidade) -
+valor_comissao_parceiro -
+valor_frete
+),
+2
+) AS lucro_operacional,
+
+-- Margem
+ROUND(
+SAFE_DIVIDE(
+SUM(
+valor_total -
+(preco_custo * quantidade) -
+valor_comissao_parceiro -
+valor_frete
+),
+NULLIF(SUM(valor_total),0)
+) * 100,
+2
+) AS margem_operacional_percentual,
+
+-- Desconto
+ROUND(
+SUM(valor_desconto),
+2
+) AS total_descontos,
+
+-- Pagamentos
+COUNTIF(status_pagamento = 'PAGO') AS pagamentos_aprovados,
+COUNTIF(status_pagamento = 'PENDENTE') AS pagamentos_pendentes,
+COUNTIF(status_pagamento = 'CANCELADO') AS pagamentos_cancelados,
+
+-- SLA
+ROUND(
+AVG(dias_entrega),
+2
+) AS media_dias_entrega
+
+FROM `bd_dunes.vw_fato_vendas`
+
+GROUP BY
+
+data_pedido,
+ano,
+mes,
+semana;
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE VIEW `bd_dunes.vw_kpi_marketing` AS
+
+SELECT
+
+-- Campanha
+id_campanha,
+nome_campanha,
+plataforma,
+
+-- Datas
+data_inicio,
+data_fim,
+dias_campanha,
+
+EXTRACT(YEAR FROM data_inicio) AS ano,
+EXTRACT(MONTH FROM data_inicio) AS mes,
+
+-- Investimento
+valor_orcamento,
+
+-- Métricas
+impressoes,
+cliques,
+conversoes,
+receita_gerada,
+
+-- KPIs
+ctr_percentual,
+taxa_conversao_percentual,
+custo_por_clique,
+custo_por_conversao,
+roas,
+roi_percentual,
+
+-- CAC estimado
+ROUND(
+SAFE_DIVIDE(
+valor_orcamento,
+NULLIF(conversoes,0)
+),
+2
+) AS cac_estimado,
+
+-- Receita por clique
+ROUND(
+SAFE_DIVIDE(
+receita_gerada,
+NULLIF(cliques,0)
+),
+2
+) AS receita_por_clique,
+
+-- Receita por impressão
+ROUND(
+SAFE_DIVIDE(
+receita_gerada,
+NULLIF(impressoes,0)
+),
+4
+) AS receita_por_impressao,
+
+-- Classificação campanha
+CASE
+
+WHEN roas >= 5 THEN 'CAMPANHA_ESCALAVEL'
+
+WHEN roas >= 3 THEN 'CAMPANHA_LUCRATIVA'
+
+WHEN roas >= 1 THEN 'CAMPANHA_ESTAVEL'
+
+ELSE 'CAMPANHA_NEGATIVA'
+
+END AS classificacao_campanha
+
+FROM `bd_dunes.vw_campanhas_marketing`;
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE VIEW `bd_dunes.vw_kpi_logistica` AS
+
+SELECT
+
+-- Entrega
+id_entrega,
+id_pedido,
+
+-- Transportadora
+tranportadora,
+tipo_frete,
+
+-- Datas
+data_envio,
+data_entrega,
+
+EXTRACT(YEAR FROM data_envio) AS ano,
+EXTRACT(MONTH FROM data_envio) AS mes,
+
+-- SLA
+dias_entrega,
+classificacao_entrega,
+
+-- Custos
+custo_frete,
+faixa_custo_frete,
+
+-- Status
+status_entrega,
+
+-- Indicadores
+CASE
+WHEN status_entrega = 'ENTREGUE' THEN 1
+ELSE 0
+END AS entrega_concluida,
+
+CASE
+WHEN dias_entrega > 7 THEN 1
+ELSE 0
+END AS entrega_atrasada,
+
+CASE
+WHEN dias_entrega <= 3 THEN 1
+ELSE 0
+END AS entrega_rapida,
+
+-- Eficiência logística
+ROUND(
+SAFE_DIVIDE(
+custo_frete,
+NULLIF(dias_entrega,0)
+),
+2
+) AS custo_por_dia_entrega,
+
+-- Classificação operacional
+CASE
+
+WHEN dias_entrega <= 2 THEN 'OPERACAO_EFICIENTE'
+
+WHEN dias_entrega <= 5 THEN 'OPERACAO_NORMAL'
+
+ELSE 'OPERACAO_LENTA'
+
+END AS eficiencia_operacional
+
+FROM `bd_dunes.vw_entregas`;
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE VIEW `bd_dunes.vw_kpi_marketplace` AS
+
+SELECT
+
+-- Parceiro
+id_parceiro,
+nome_fantasia,
+razao_social,
+
+-- Localização
+cidade,
+estado,
+latitude,
+longitude,
+
+-- Comissão
+percentual_comissao,
+faixa_comissao,
+
+-- Status
+status_parceria,
+classificacao_parceria,
+
+-- Tempo parceria
+dias_parceria,
+
+-- Produtos
+COUNT(DISTINCT id_produto) AS total_produtos,
+
+COUNT(DISTINCT categoria) AS categorias_ativas,
+
+-- Pedidos
+COUNT(DISTINCT id_pedido) AS total_pedidos,
+
+-- Clientes
+COUNT(DISTINCT id_cliente) AS clientes_unicos,
+
+-- Receita
+ROUND(
+SUM(valor_total),
+2
+) AS faturamento_parceiro,
+
+ROUND(
+AVG(valor_total),
+2
+) AS ticket_medio_parceiro,
+
+-- Comissão total
+ROUND(
+SUM(valor_comissao_parceiro),
+2
+) AS comissao_total,
+
+-- Lucro operacional
+ROUND(
+SUM(
+valor_total -
+(preco_custo * quantidade) -
+valor_comissao_parceiro
+),
+2
+) AS lucro_operacional_parceiro,
+
+-- Produtos vendidos
+SUM(quantidade) AS total_itens_vendidos,
+
+-- Datas
+MIN(data_pedido) AS primeira_venda,
+MAX(data_pedido) AS ultima_venda,
+
+DATE_DIFF(
+CURRENT_DATE(),
+MAX(data_pedido),
+DAY
+) AS dias_ultima_venda,
+
+-- Performance parceiro
+CASE
+
+WHEN SUM(valor_total) >= 500000 THEN 'PARCEIRO_ELITE'
+
+WHEN SUM(valor_total) >= 200000 THEN 'PARCEIRO_PREMIUM'
+
+WHEN SUM(valor_total) >= 50000 THEN 'PARCEIRO_DESTAQUE'
+
+ELSE 'PARCEIRO_PADRAO'
+
+END AS classificacao_performance
+
+FROM `bd_dunes.vw_fato_vendas`
+
+GROUP BY
+
+id_parceiro,
+nome_fantasia,
+razao_social,
+cidade,
+estado,
+latitude,
+longitude,
+percentual_comissao,
+faixa_comissao,
+status_parceria,
+classificacao_parceria,
+dias_parceria;
+
+
+
+
+
