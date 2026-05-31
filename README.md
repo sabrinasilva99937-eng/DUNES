@@ -1,19 +1,19 @@
 
 
-#  Dunes — Data Warehouse para Joalheria
+#  Dunes — Joalheiria Online
 
 ##  Sobre o Projeto
 
 O  Dunes é um projeto de engenharia de dados desenvolvido para uma joalheria digital, com foco em análise de vendas, clientes, produtos, logística, marketing e marketplace.
 
-O projeto foi construído utilizando SQL no BigQuery, aplicando técnicas de limpeza, transformação e modelagem analítica de dados.
+O projeto foi construído utilizando para dados, o SQL no BigQuery e o app no Google AI studio, aplicando técnicas de limpeza de dados, transformação, modelagem analítica de dados, Data viz e BI.
 
 ---
 
 ##  Principais Funcionalidades
 
 ###  Limpeza de Dados
-- Padronização de textos
+- Padronização dos dados
 - Conversão de tipos
 - Tratamento de valores nulos
 - Normalização de informações
@@ -28,7 +28,7 @@ O projeto foi construído utilizando SQL no BigQuery, aplicando técnicas de lim
 - Parceiros
 - Marketing
 
-###  KPIs Estratégicos
+###  Exemplos de KPI's
 - Ticket médio
 - ROI e ROAS
 - Margem operacional
@@ -58,7 +58,6 @@ O projeto foi construído utilizando SQL no BigQuery, aplicando técnicas de lim
 - SQL
 - Google BigQuery
 - Power BI
-- Git
 - GitHub
 
 ---
@@ -66,28 +65,25 @@ O projeto foi construído utilizando SQL no BigQuery, aplicando técnicas de lim
 ##  Objetivos do Projeto
 
 - Demonstrar conhecimentos em SQL avançado
-- Simular um ambiente real de negócio
-- Construir KPIs estratégicos
-- Criar uma base analítica escalável
-- Desenvolver um portfólio profissional
+- Simular um ambiente real de negócio e o manuseio de dados.
+- Construir KPIs estratégicos.
+- Criar uma base analítica escalável.
+- Desenvolver um portfólio profissional.
+- Desenvolver um App mobile.
 
 ---
 
 ##  Futuras Melhorias
 
-- Dashboard em Power BI
-- Pipeline ETL automatizado
-- Integração com APIs
-- Machine Learning
-- Deploy em Cloud
+- Deploy em Cloud para visualização do App em um site real ou App android.
 
 ---
 
 ##  Autores
 Murilo Costa
-Rafael 
-sabrina 
-ana luiza
+Rafael Moreira
+sabrina Silva
+Ana luiza
 victor hugo
 
 
